@@ -1,5 +1,6 @@
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -45,7 +46,7 @@ public class ServerService extends UnicastRemoteObject implements RMIServerServi
             for (int j = 1; j < nElements + 1; ++j) {
                 numbers.add(j);
             }
-            Collections.shuffle(numbers);
+            Collections.shuffle(numbers, new SecureRandom());
             jobsAvailable.add(numbers);
         }
 

@@ -11,7 +11,7 @@ public class WorkerRun implements Runnable {
         try {
             while (!stopRun) {
                 ArrayList<Integer> job = rmiServerService.firstOrDefault();
-                if (job != null){
+                if (job != null) {
                     rmiServerService.doJob(job);
                     System.out.println(rmiServerService.jobCompletedIn());
                 }
