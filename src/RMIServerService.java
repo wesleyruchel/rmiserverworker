@@ -5,9 +5,8 @@ import java.util.ArrayList;
 public interface RMIServerService extends Remote {
     String connectionOk() throws RemoteException;
 
-    ArrayList<Integer> firstOrDefault() throws RemoteException;
+    ArrayList<Integer> deliveryAJob() throws RemoteException;
 
-    void doJob(ArrayList<Integer> listToSort) throws RemoteException;
+    void showJobDone(ArrayList<Integer> done) throws RemoteException;
 
-    String jobCompletedIn() throws RemoteException;
 }

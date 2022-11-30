@@ -1,3 +1,4 @@
+import java.io.Serial;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.security.SecureRandom;
@@ -6,9 +7,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 public class ServerService extends UnicastRemoteObject implements RMIServerService {
+    @Serial
+    private static final long serialVersionUID = -8752920138287505308L;
     LinkedList<ArrayList<Integer>> jobsAvailable;
-    private long started;
-    private long completed;
 
     ServerService() throws RemoteException {
         super();
@@ -22,20 +23,13 @@ public class ServerService extends UnicastRemoteObject implements RMIServerServi
     }
 
     @Override
-    public ArrayList<Integer> firstOrDefault() throws RemoteException {
+    public ArrayList<Integer> deliveryAJob() throws RemoteException {
         return jobsAvailable.size() > 0 ? jobsAvailable.remove() : null;
     }
 
     @Override
-    public void doJob(ArrayList<Integer> listToSort) throws RemoteException {
-        setStarted(System.currentTimeMillis());
-        System.out.println(sort(listToSort));
-        setCompleted(System.currentTimeMillis());
-    }
-
-    @Override
-    public String jobCompletedIn() {
-        return "Job completed in " + (getCompleted() - getStarted());
+    public void showJobDone(ArrayList<Integer> done) throws RemoteException {
+        System.out.println(done);
     }
 
     public void setJobsAvailable(int nJobs, int nElements) {
@@ -53,38 +47,5 @@ public class ServerService extends UnicastRemoteObject implements RMIServerServi
         System.out.println("The Server generate a list of " + jobsAvailable.size() + " jobs with "
                 + nElements + " elements each.");
 
-    }
-
-    private ArrayList<Integer> sort(ArrayList<Integer> numbers) {
-        boolean change = true;
-        int aux;
-        while (change) {
-            change = false;
-            for (int i = 0; i < numbers.size() - 1; i++) {
-                if (numbers.get(i) > numbers.get(i + 1)) {
-                    aux = numbers.get(i);
-                    numbers.set(i, numbers.get(i + 1));
-                    numbers.set(i + 1, aux);
-                    change = true;
-                }
-            }
-        }
-        return numbers;
-    }
-
-    public long getStarted() {
-        return started;
-    }
-
-    public void setStarted(long started) {
-        this.started = started;
-    }
-
-    public long getCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(long completed) {
-        this.completed = completed;
     }
 }
